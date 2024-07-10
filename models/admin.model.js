@@ -9,6 +9,10 @@ let adminSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  profile: {
+    type: String,
+    required:true
+  },
 });
 
 let admin = mongoose.model("adminSchema", adminSchema);

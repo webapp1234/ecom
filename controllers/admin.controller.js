@@ -12,8 +12,15 @@ let getAdmin = async (req, res) => {
 let register = async (req, res) => {
   try {
     let body = req.body;
+    let { path } = req.file;
+    // console.log(body);
 
-    let admin = await adminService.register(body);
+    let newBody = {
+      ...body,
+      profile: path,
+    };
+
+    let admin = await adminService.register(newBody);
 
     //   console.log(admin, "resss");
 
