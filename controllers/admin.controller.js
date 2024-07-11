@@ -1,4 +1,5 @@
 const { adminService } = require("../services");
+const sendEmail = require("../services/email.service");
 
 let getAdmin = async (req, res) => {
   let result = await adminService.getAllAdmin();
@@ -8,6 +9,8 @@ let getAdmin = async (req, res) => {
     result,
   });
 };
+
+
 
 let register = async (req, res) => {
   try {
@@ -21,6 +24,16 @@ let register = async (req, res) => {
     };
 
     let admin = await adminService.register(newBody);
+
+    if (admin) {
+      let result = await sendEmail(
+        admin.email,
+        "Test Mail",
+        `Welcome ${admin.email}`
+      );
+
+      console.log(result);
+    }
 
     //   console.log(admin, "resss");
 
