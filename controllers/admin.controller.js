@@ -10,8 +10,6 @@ let getAdmin = async (req, res) => {
   });
 };
 
-
-
 let register = async (req, res) => {
   try {
     let body = req.body;
