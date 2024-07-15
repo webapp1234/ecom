@@ -1,3 +1,4 @@
+const { createToken } = require("../middlewares/auth");
 const { adminService } = require("../services");
 const sendEmail = require("../services/email.service");
 
@@ -46,4 +47,34 @@ let register = async (req, res) => {
   }
 };
 
-module.exports = { getAdmin, register };
+let login = async (req, res) => {
+  try {
+    let { email, password } = req.body;
+    let admin = await adminService.findByEmail(email);
+
+    if (!admin) {
+      throw new Error("user not found");
+    }
+
+    if (admin.password !== password) {
+      throw new Error("password invalid");
+    }
+
+    let token = createToken({ admin });
+
+    res.cookie("token", token);
+
+    res.status(200).json({
+      message: "login success",
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+let getProfile = async (req, res) => {
+  let admin = req.admin;
+
+  res.status(200).json({ message: "profile get success", admin });
+};
+module.exports = { getAdmin, register, login, getProfile };

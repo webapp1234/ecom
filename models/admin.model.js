@@ -11,7 +11,12 @@ let adminSchema = new mongoose.Schema({
   },
   profile: {
     type: String,
-    required:true
+    required: true,
+  },
+  role: {
+    type: String,
+    enum: ["admin", "user"],
+    default: "user",
   },
 });
 

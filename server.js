@@ -4,11 +4,15 @@ let express = require("express");
 const dbConnect = require("./db/dbConnect");
 const routes = require("./routes");
 let cors = require("cors");
+const cookieParser = require("cookie-parser");
 
 let app = express();
 
 //json body
 app.use(express.json());
+
+//cookie-parser
+app.use(cookieParser());
 
 //cross origin resource sharing
 app.use(cors());

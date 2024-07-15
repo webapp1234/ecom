@@ -10,4 +10,8 @@ let getAllAdmin = () => {
   return adminSchema.find();
 };
 
-module.exports = { register, getAllAdmin };
+let findByEmail = (email) => {
+  return adminSchema.findOne({ email });
+};
+
+module.exports = { register, getAllAdmin, findByEmail };
