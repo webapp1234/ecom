@@ -8,6 +8,6 @@ let route = express.Router();
 route.get("/get", adminController.getAdmin);
 route.post("/register", upload.single("profile"), adminController.register);
 route.post("/login", adminController.login);
-route.get("/profile", isLogin, adminController.getProfile);
+route.get("/profile", isLogin(["user", "admin"]), adminController.getProfile);
 
 module.exports = route;

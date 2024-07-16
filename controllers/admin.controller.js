@@ -1,5 +1,6 @@
 const { createToken } = require("../middlewares/auth");
 const { adminService } = require("../services");
+const uploadImage = require("../services/cloudnary.service");
 const sendEmail = require("../services/email.service");
 
 let getAdmin = async (req, res) => {
@@ -14,13 +15,19 @@ let getAdmin = async (req, res) => {
 let register = async (req, res) => {
   try {
     let body = req.body;
-    let { path } = req.file;
+    let { path, originalname } = req.file;
     // console.log(body);
+
+    //cloudnary
+
+    let result = await uploadImage(path, originalname);
 
     let newBody = {
       ...body,
-      profile: path,
+      profile: result.secure_url,
     };
+
+    console.log(result);
 
     let admin = await adminService.register(newBody);
 
